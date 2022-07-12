@@ -1,0 +1,38 @@
+def unnamed():
+    global _hidden_verificationVariable=0
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    set_safety_mode_transition_hardness(1)
+    set_tool_output_mode(0)
+    set_tool_digital_output_mode(0, 1)
+    set_tool_digital_output_mode(1, 1)
+    set_tool_voltage(0)
+    set_gravity([0.0, 0.0, 9.82])
+    set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+    set_standard_analog_input_domain(0, 1)
+    set_standard_analog_input_domain(1, 1)
+    set_tool_analog_input_domain(0, 1)
+    set_tool_analog_input_domain(1, 1)
+    set_analog_outputdomain(0, 0)
+    set_analog_outputdomain(1, 0)
+    set_input_actions_to_default()
+    step_count = 0.0
+
+    thread Step_Counter_Thread():
+        while (True):
+        step_count = step_count + 1.0
+        sync()
+        end
+    end
+  
+    run Step_Counter_Thread()
+    global Waypoint_1_p = p[112, -334,
+                            10, 1.5,
+                            -2.6, 0]
+    global Waypoint_1_q = [209, -334,
+                            10, 1.5,
+                            -2.6, 0]
+    while (True):
+        movej(get_inverse_kin(Waypoint_1_p, qnear=Waypoint_1_q), 
+              a=1.3962634015954636, v=1.0471975511965976)
+    end
+end
